@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://dcs5b61odk35g"]
+
+[ext_resource type="PackedScene" uid="uid://bsnm1l3hjvqy2" path="res://Player/player.tscn" id="1_bmtft"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ikjpa"]
+sky_top_color = Color(0.384314, 0.454902, 0.54902, 1)
+sky_horizon_color = Color(0.646078, 0.655975, 0.670505, 1)
+ground_horizon_color = Color(0.646078, 0.655975, 0.670505, 1)
+
+[sub_resource type="Sky" id="Sky_kpxe8"]
+sky_material = SubResource("ProceduralSkyMaterial_ikjpa")
+
+[sub_resource type="Environment" id="Environment_i6m8x"]
+background_mode = 2
+sky = SubResource("Sky_kpxe8")
+tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+glow_enabled = true
+volumetric_fog_density = 0.01
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vnb5s"]
+size = Vector3(30, 0.05, 30)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ri0ap"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_0xgd4"]
+
+[node name="Level1-1" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_i6m8x")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(1, 1, 0.792157, 1)
+shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_vnb5s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ri0ap")
+
+[node name="Player" parent="." instance=ExtResource("1_bmtft")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -4)
+mesh = SubResource("SphereMesh_0xgd4")
